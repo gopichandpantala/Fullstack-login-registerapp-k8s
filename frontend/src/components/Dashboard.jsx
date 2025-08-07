@@ -4,7 +4,7 @@ import './Login.css';
 
 function Dashboard() {
   const location = useLocation();
-  const message = location.state?.message || 'Hello User!';
+  const message = location.state?.message || 'Welcome!';
 
   return (
     <div className="container">

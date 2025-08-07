@@ -12,18 +12,21 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('/api/users/signup', {
+    const response = await fetch('/api/users/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password }),
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
-    if (res.ok && data.username) {
-      navigate('/dashboard', {
-        state: { message: `Account created successfully` }
-      });
+    if (data.message === 'Signup successful') {
+      setSignupStatus('success');
+      setTimeout(() => {
+        navigate('/dashboard', {
+          state: { message: 'Account created successfully!' }
+        });
+      }, 1500);
     } else {
       setSignupStatus('error');
     }
@@ -33,25 +36,28 @@ function Signup() {
     <div className="container">
       <div className="form-container">
         <h2>Sign Up</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleSignup}>SIGN UP</button>
+        <form onSubmit={handleSignup}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">SIGN UP</button>
+        </form>
+        {signupStatus === 'success' && <p className="success">Signup successful</p>}
         {signupStatus === 'error' && <p className="error">Signup failed</p>}
         <a href="/login">Login</a>
       </div>

@@ -4,8 +4,6 @@ const pool = require('../config/db');
 
 // SIGNUP
 router.post('/signup', async (req, res) => {
-  console.log('Signup Request:', req.body); // 🔍
-
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -35,8 +33,6 @@ router.post('/signup', async (req, res) => {
 
 // LOGIN
 router.post('/login', async (req, res) => {
-  console.log('Login Request:', req.body); // 🔍
-
   const { email, password } = req.body;
 
   if (!email || !password) {

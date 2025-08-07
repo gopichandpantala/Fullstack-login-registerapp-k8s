@@ -21,7 +21,12 @@ function Login() {
 
     if (data.message === 'Login successful') {
       setLoginStatus('success');
-      setTimeout(() => navigate('/dashboard'), 1500);
+      localStorage.setItem('username', data.username);
+      setTimeout(() => {
+        navigate('/dashboard', {
+          state: { message: `Hello ${data.username}!` }
+        });
+      }, 1500);
     } else {
       setLoginStatus('error');
     }
@@ -31,19 +36,21 @@ function Login() {
     <div className="container">
       <div className="form-container">
         <h2>Login</h2>
-        <input
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleLogin}>LOGIN</button>
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">LOGIN</button>
+        </form>
         {loginStatus === 'success' && <p className="success">Login successful</p>}
         {loginStatus === 'error' && <p className="error">Invalid credentials</p>}
         <a href="/signup">Sign Up</a>
