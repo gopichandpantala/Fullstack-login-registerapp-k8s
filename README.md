@@ -14,5 +14,5 @@ ConfigMap + InitContainer for DB bootstrapping
 
 Ingress for browse access
 
-🧠 Architecture Diagram
+🧠** Architecture Diagram**
 <img width="1297" height="808" alt="fullstack-k8s" src="https://github.com/user-attachments/assets/2abff558-2b8e-473b-81c9-ba15233b6eeb" />
