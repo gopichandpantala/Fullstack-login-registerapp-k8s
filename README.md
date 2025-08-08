@@ -1,8 +1,10 @@
 # **Fullstack Login-Register App – Kubernetes Deployment with Jenkins CI/CD**
 
+
 📌 **Overview**
 
 This project demonstrates deploying a React frontend, Node.js backend, and PostgreSQL database on Kubernetes with a complete CI/CD pipeline using Jenkins and DockerHub.
+
 
 🛠**Tech Stack**
 
@@ -24,15 +26,19 @@ Ingress: NGINX Ingress Controller
 
 
 
+
 🧠 **Architecture Diagram**
 
 <img width="1212" height="725" alt="fullstack-k8s" src="https://github.com/user-attachments/assets/15401f32-7e2a-4b75-807c-069e15404c35" />
 
 
 
+
 📂 **Project Structure**
 
 <img width="812" height="460" alt="image" src="https://github.com/user-attachments/assets/5938482a-36d9-47e7-b9a4-0cfd99b6d6d6" />
+
+
 
 
 
@@ -89,6 +95,8 @@ docker push <your-dockerhub-username>/login-frontend
 
 
 
+
+
 📦 **Step 2 – Kubernetes Deployment**
 
 We defined Kubernetes YAML manifests inside k8s/:
@@ -131,6 +139,8 @@ kubectl apply -f k8s/backend/
 kubectl apply -f k8s/frontend/
 kubectl apply -f k8s/ingress.yaml
 ```
+
+
 
 
 ⚙ **Step 3 – Jenkins CI/CD Setup**
@@ -239,16 +249,26 @@ pipeline {
 }
 ```
 
+
+
 <img width="1849" height="815" alt="image" src="https://github.com/user-attachments/assets/2e06e57d-f486-49a0-b528-e957bdde1c27" />
+
+
 
 
 
 🌐 **Accessing the Application**
 Once deployed, the app is accessible via the Ingress Controller at:(for local testing i have added in /etc/hosts as 127.0.0.1  loginapp.local )
 
+
+
 http://loginapp.local/
 
+
 <img width="1845" height="1012" alt="image" src="https://github.com/user-attachments/assets/6725308a-9417-42bd-8e17-0bba8093dcea" />
+
+
+
 
 
 
