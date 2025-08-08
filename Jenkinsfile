@@ -28,7 +28,7 @@ pipeline {
                     sh """
                         npm install
                         npm run build
-                        docker build -t ${env.FRONTEND_IMAGE}:latest .
+                        docker build --no-cache -t ${env.FRONTEND_IMAGE}:latest .
                     """
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
                 dir('backend') {
                     sh """
                         npm install
-                        docker build -t ${env.BACKEND_IMAGE}:latest .
+                        docker build --no-cache -t ${env.BACKEND_IMAGE}:latest .
                     """
                 }
             }
