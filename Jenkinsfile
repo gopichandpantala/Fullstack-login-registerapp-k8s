@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "node-local"   // This makes Jenkins use your configured NodeJS installation
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('DockerHub-Creds')
         GITHUB_CREDENTIALS = credentials('Github-creds')
@@ -18,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Build Frontend Image') {
+        stage('Build Frontend App') {
             steps {
                 dir('frontend') {
                     sh """
@@ -30,11 +34,12 @@ pipeline {
             }
         }
 
-        stage('Build Backend Image') {
+        stage('Build Backend App') {
             steps {
                 dir('backend') {
                     sh """
                         npm install
+                        npm run build
                         docker build -t ${env.BACKEND_IMAGE}:latest .
                     """
                 }
