@@ -69,10 +69,11 @@ pipeline {
 			# 🔄 Restart deployments so pods pull the latest image
                         microk8s kubectl rollout restart deployment frontend-deployment
                         microk8s kubectl rollout restart deployment backend-deployment
-
+                        microk8s kubectl rollout restart statefulset/postgres 
               		# ⏳ Wait until updates are done
                         microk8s kubectl rollout status deployment/frontend-deployment
                         microk8s kubectl rollout status deployment/backend-deployment
+                        microk8s kubectl rollout status statefulset/postgres
                     """
                 }
             }
