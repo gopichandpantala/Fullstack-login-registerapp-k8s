@@ -21,7 +21,11 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 dir('frontend') {
-                    sh "docker build -t ${env.FRONTEND_IMAGE}:latest ."
+                    sh """
+                        npm install
+                        npm run build
+                        docker build -t ${env.FRONTEND_IMAGE}:latest .
+                    """
                 }
             }
         }
@@ -29,7 +33,10 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 dir('backend') {
-                    sh "docker build -t ${env.BACKEND_IMAGE}:latest ."
+                    sh """
+                        npm install
+                        docker build -t ${env.BACKEND_IMAGE}:latest .
+                    """
                 }
             }
         }
