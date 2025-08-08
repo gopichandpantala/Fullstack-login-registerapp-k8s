@@ -24,7 +24,7 @@ function Login() {
       localStorage.setItem('username', data.username);
       setTimeout(() => {
         navigate('/dashboard', {
-          state: { message: `Welcome ${data.username}!` }
+          state: { message: `Hello ${data.username}!` }
         });
       }, 1500);
     } else {
