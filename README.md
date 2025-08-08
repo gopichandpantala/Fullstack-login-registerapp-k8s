@@ -149,11 +149,11 @@ kubectl apply -f k8s/ingress.yaml
 
 We automated builds using Jenkins.
 
-Jenkins Plugins Installed:
+**Jenkins Plugins Installed:**
 
 Pipeline
 
-Docker
+Docker, NodeJS
 
 Kubernetes CLI
 
@@ -180,6 +180,10 @@ Pipeline Trigger:
 pipeline {
     agent any
 
+    tools {
+        nodejs "node-local"   // This makes Jenkins use your configured NodeJS installation
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('DockerHub-Creds')
         GITHUB_CREDENTIALS = credentials('Github-creds')
@@ -197,18 +201,25 @@ pipeline {
             }
         }
 
-        stage('Build Frontend Image') {
+        stage('Build Frontend App') {
             steps {
                 dir('frontend') {
-                    sh "docker build -t ${env.FRONTEND_IMAGE}:latest ."
+                    sh """
+                        npm install
+                        npm run build
+                        docker build --no-cache -t ${env.FRONTEND_IMAGE}:latest .
+                    """
                 }
             }
         }
 
-        stage('Build Backend Image') {
+        stage('Build Backend App') {
             steps {
                 dir('backend') {
-                    sh "docker build -t ${env.BACKEND_IMAGE}:latest ."
+                    sh """
+                        npm install
+                        docker build --no-cache -t ${env.BACKEND_IMAGE}:latest .
+                    """
                 }
             }
         }
@@ -233,6 +244,15 @@ pipeline {
                         microk8s kubectl apply -f k8s/backend/
                         microk8s kubectl apply -f k8s/frontend/
                         microk8s kubectl apply -f k8s/ingress.yaml
+
+			# 🔄 Restart deployments so pods pull the latest image
+                        microk8s kubectl rollout restart deployment frontend-deployment
+                        microk8s kubectl rollout restart deployment backend-deployment
+                        microk8s kubectl rollout restart statefulset/postgres 
+              		# ⏳ Wait until updates are done
+                        microk8s kubectl rollout status deployment/frontend-deployment
+                        microk8s kubectl rollout status deployment/backend-deployment
+                        microk8s kubectl rollout status statefulset/postgres
                     """
                 }
             }
@@ -249,11 +269,13 @@ pipeline {
         }
     }
 }
+
 ```
 
 
 
-<img width="1849" height="815" alt="image" src="https://github.com/user-attachments/assets/2e06e57d-f486-49a0-b528-e957bdde1c27" />
+<img width="1837" height="1009" alt="image" src="https://github.com/user-attachments/assets/856cacd7-3fc7-42e5-8a8f-894a8cdc40ad" />
+
 
 
 
@@ -268,6 +290,7 @@ http://loginapp.local/
 
 
 <img width="1845" height="1012" alt="image" src="https://github.com/user-attachments/assets/6725308a-9417-42bd-8e17-0bba8093dcea" />
+
 
 
 
