@@ -97,7 +97,9 @@ docker push <your-dockerhub-username>/login-frontend
 
 
 
+
 📦 **Step 2 – Kubernetes Deployment**
+
 
 We defined Kubernetes YAML manifests inside k8s/:
 
