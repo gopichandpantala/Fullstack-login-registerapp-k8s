@@ -15,12 +15,13 @@ spec:
       containers:
         - name: backend
           image: pantalagopichand/backend:latest
+          imagePullPolicy: Always   # ✅ Same logic here
           ports:
             - containerPort: 5000
           env:
             - name: DB_USER
               valueFrom:
-                configMapKeyRef:        # ✅ Changed from secretKeyRef
+                configMapKeyRef:
                   name: postgres-config
                   key: POSTGRES_USER
             - name: DB_PASSWORD
@@ -30,7 +31,7 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: DB_NAME
               valueFrom:
-                configMapKeyRef:        # Optional: can hardcode or reference
+                configMapKeyRef:
                   name: postgres-config
                   key: POSTGRES_DB
             - name: DB_HOST
