@@ -39,7 +39,6 @@ pipeline {
                 dir('backend') {
                     sh """
                         npm install
-                        npm run build
                         docker build -t ${env.BACKEND_IMAGE}:latest .
                     """
                 }
