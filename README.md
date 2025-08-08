@@ -25,25 +25,8 @@ Ingress: NGINX Ingress Controller
 
 📂 **Project Structure**
 
-login-app/
-│── backend/              # Node.js backend service
-│   ├── Dockerfile
-│   ├── server.js
-│   ├── package.json
-│
-│── frontend/             # React frontend service
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   ├── package.json
-│
-│── k8s/                  # Kubernetes manifests
-│   ├── backend/          # Backend Deployment + Service
-│   ├── frontend/         # Frontend Deployment + Service
-│   ├── db/               # DB StatefulSet + PV + PVC + ConfigMap
-│   ├── ingress.yaml      # Ingress configuration
-│
-├── Jenkinsfile           # Jenkins CI/CD pipeline script
-├── README.md
+<img width="812" height="460" alt="image" src="https://github.com/user-attachments/assets/5938482a-36d9-47e7-b9a4-0cfd99b6d6d6" />
+
 
 🚀 **Step 1 – Build and Push Docker Images**
 We created separate Dockerfiles for frontend and backend.
